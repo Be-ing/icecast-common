@@ -77,7 +77,11 @@ endif()
 if(WIN32)
     # PUBLIC because it is also used in the header file
     target_compile_definitions(icecast-net PUBLIC _WIN32)
+    if(MSVC)
+        target_link_libraries(icecast-net PRIVATE ws2_32)
+    endif()
 endif()
+
 
 include(CTest)
 if(BUILD_TESTING)
