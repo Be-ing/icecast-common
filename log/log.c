@@ -49,6 +49,7 @@
 #include <pthread.h>
 #else
 #include <windows.h>
+typedef SSIZE_T ssize_t;
 #endif
 
 #include "log.h"
