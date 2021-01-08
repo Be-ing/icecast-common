@@ -73,7 +73,10 @@ uint64_t timing_get_time(void)
     gettimeofday(&mtv, NULL);
 
     return (uint64_t)(mtv.tv_sec) * 1000 + (uint64_t)(mtv.tv_usec) / 1000;
-#elif HAVE_FTIME
+#elif HAVE_FTIME || _MSC_VER
+#if _MSC_VER
+#define ftime _ftime
+#endif
     struct timeb t;
 
     ftime(&t);
