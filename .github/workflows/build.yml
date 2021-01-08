@@ -1,0 +1,37 @@
+name: Build
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  build:
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-20.04, macos-10.15, windows-2019]
+        lib: [avl, httpp, log, net, thread, timing]
+
+    name: ${{ matrix.os }} - ${{ matrix.lib }}
+    runs-on: ${{ matrix.os }}
+    steps:
+    - name: Check out git repository
+      uses: actions/checkout@v2
+
+    - name: "[Windows] Set up MSVC Developer Command Prompt"
+      if: runner.os == 'Windows'
+      uses: seanmiddleditch/gha-setup-vsdevenv@v3
+
+    - name: Create build directory
+      run: mkdir build
+      working-directory: ${{ matrix.lib }}
+
+    - name: Configure
+      run: cmake ..
+      working-directory: ${{ matrix.lib }}/build
+
+    - name: Build
+      run: cmake --build .
+      working-directory: ${{ matrix.lib }}/build
+      env:
+        CMAKE_BUILD_PARALLEL_LEVEL: 2
