@@ -22,12 +22,19 @@ jobs:
       if: runner.os == 'Windows'
       uses: seanmiddleditch/gha-setup-vsdevenv@v3
 
+    - name: "[Windows] Install vcpkg dependencies"
+      if: runner.os == 'Windows' && matrix.lib == 'thread'
+      run: >
+        vcpkg install pthread && Add-Content -Path $env:GITHUB_ENV -Value "CMAKE_ARGS=-DCMAKE_TOOLCHAIN_FILE=$env:VCPKG_INSTALLATION_ROOT/scripts/buildsystems/vcpkg.cmake -DCMAKE_PREFIX_PATH=$env:VCPKG_INSTALLATION_ROOT/installed/$env:VCPKG_DEFAULT_TRIPLET"
+      env:
+        VCPKG_DEFAULT_TRIPLET: x64-windows-static
+
     - name: Create build directory
       run: mkdir build
       working-directory: ${{ matrix.lib }}
 
     - name: Configure
-      run: cmake ..
+      run: cmake ${{ env.CMAKE_ARGS }} ..
       working-directory: ${{ matrix.lib }}/build
 
     - name: Build
