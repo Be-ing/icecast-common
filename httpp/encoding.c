@@ -26,8 +26,16 @@
  #include <config.h>
 #endif
 
-#include <sys/types.h>
+
+#ifdef _MSC_VER
+#include <windows.h>
+#define strcasecmp _stricmp
+typedef SSIZE_T ssize_t;
+#else
 #include <strings.h>
+#include <sys/types.h>
+#endif
+
 #include <string.h>
 #include <stdlib.h>
 #include <stdio.h>
