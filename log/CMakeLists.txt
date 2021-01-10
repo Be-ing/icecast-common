@@ -1,7 +1,7 @@
 cmake_minimum_required(VERSION 3.1)
 project(icecast-log C)
 
-add_library(icecast-log log.c)
+add_library(icecast-log STATIC log.c)
 
 include(CheckIncludeFile)
 include(CheckSymbolExists)

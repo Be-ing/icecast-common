@@ -1,7 +1,7 @@
 cmake_minimum_required(VERSION 3.1)
 project(icecast-avl C)
 
-add_library(icecast-avl avl.c)
+add_library(icecast-avl STATIC avl.c)
 
 # TODO: Add support for thread flags (NO_THREAD, HAVE_AVL_NODE_LOCK)
 # PUBLIC because NO_THREAD is also used in the header file
