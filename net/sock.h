@@ -36,8 +36,7 @@
 #ifdef HAVE_UNISTD_H
 #include <unistd.h>
 #elif _MSC_VER
-#include <windows.h>
-#include <ws2tcpip.h>
+#include <basetsd.h>
 typedef SSIZE_T ssize_t;
 #elif _WIN32
 #include <compat.h>
