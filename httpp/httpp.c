@@ -33,6 +33,9 @@
 
 #include <stdlib.h>
 #include <string.h>
+#if defined(_MSC_VER)
+#define strcasecmp _stricmp
+#endif
 #include <ctype.h>
 #ifdef HAVE_STRINGS_H
 #include <strings.h>
